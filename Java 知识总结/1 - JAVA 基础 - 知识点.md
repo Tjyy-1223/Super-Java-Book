@@ -305,7 +305,7 @@ CGLIB动态代理机制是为了解决JDK动态代理的一个致命问题： **
 - 通过 Enhancer类来动态获取被代理类，当代理类调用方法的时候，实际调用的是 MethodInterceptor 中的 intercept 方法
 - CGLIB动态代理的使用步骤：
   - 定义一个目标类 **（目标类）** 
-  - 自定义 MethodInterceptor 并重写 intercept 方法，intercept 用于拦截增强被代理类的方法**（定义代理类）**
+  - 自定义 MethodInterceptor 并重写 intercept 方法，intercept 用于拦截增强被代理类的方法 **（定义代理类）**
   - 通过 Enhancer 类的 create()创建代理类 **（代理类实例对象）** 
 
 CGLIB 动态代理代码示例如下:
@@ -511,9 +511,9 @@ Java 的泛型是伪泛型，因为 Java 在编译期间，所有的泛型类型
 
 **类加载机制和类的加载：**
 
-![image-20240804151516416](./assets/image-20240804151516416.png)
+<img src="./assets/image-20240804151516416.png" alt="image-20240804151516416" style="zoom:25%;" />
 
-![image-20240801223030437](./assets/image-20240801223030437.png)
+<img src="./assets/image-20240801223030437.png" alt="image-20240801223030437" style="zoom: 33%;" />
 
 对于一个Java类：Car 类型以及其产生的对象：Car c1 = new Car()，在内存中共产生三个结构：
 
@@ -633,7 +633,7 @@ class对象是可以说是反射中最常用的，获取class对象的方式的�
 
 #### 1 JAVA 中异常的分类
 
-![image-20240804151145338](./assets/image-20240804151145338.png)
+<img src="./assets/image-20240804151145338.png" alt="image-20240804151145338" style="zoom:25%;" />
 
 **异常分类：**
 
@@ -729,7 +729,7 @@ public static void simpleTryCatch() {
 
 #### 1 什么是 SPI 机制
 
-<img src="./assets/image-20240801224131873.png" alt="image-20240801224131873" style="zoom:80%;" />
+<img src="./assets/image-20240801224131873.png" alt="image-20240801224131873" style="zoom: 25%;" />
 
 **什么是 SPI 机制：核心思想就是解耦**
 
@@ -830,7 +830,7 @@ transient 关键字的作用是：阻止实例中那些用此关键字修饰的�
 
 #### 1 Java 中的几种基本数据类型是什么?对应的包装类型是什么?各自占用多少字节呢?
 
-![image-20240801225254556](./assets/image-20240801225254556.png)
+<img src="./assets/image-20240801225254556.png" alt="image-20240801225254556" style="zoom:33%;" />
 
 这八种基本类型都有对应的包装类分别为：Byte、Short、Integer、Long、Float、Double、Character、Boolean 。
 
@@ -913,7 +913,7 @@ Java9 之前，字符串对象通过“+”的字符串拼接方式，实际上�
 
 #### 5 String s1 = new String("abc"); 这段代码创建了几个字符串对象?
 
-**字符串常量池：**JVM 为了提升性能和减少内存消耗针对字符串（String 类）专门开辟的一块区域，主要目的是为了避免字符串的重复创建。
+**字符串常量池：** JVM 为了提升性能和减少内存消耗针对字符串（String 类）专门开辟的一块区域，主要目的是为了避免字符串的重复创建。
 
 执行 String s1 = new String("abc") 会创建 **1 个或者 2 个**字符串对象：
 
@@ -1051,7 +1051,7 @@ Integer 对应是 int 类型的包装类，可以把属性也就是数据跟处�
 
 #### 1 深拷⻉和浅拷⻉区别了解吗?什么是引用拷⻉?
 
-![image-20240804151259487](./assets/image-20240804151259487.png)
+<img src="./assets/image-20240804151259487.png" alt="image-20240804151259487" style="zoom: 33%;" />
 
 - 浅拷贝：浅拷贝会在堆上创建一个新的对象（区别于引用拷贝的一点），不过，如果原对象内部的属性是引用类型的话，浅拷贝会直接复制内部对象的引用地址，也就是说拷贝对象和原对象共用同一个内部对象。
   - 直接调用 clone() 则是浅拷贝
@@ -1606,7 +1606,7 @@ public class NativeExample {
 
 要实现native方法，你需要完成以下步骤：
 
-1. **生成JNI头文件：**使用 javah 工具从你的 Java 类生成 C/C++ 的头文件，这个头文件包含了所有 native 方法的原型。
+1. **生成JNI头文件：** 使用 javah 工具从你的 Java 类生成 C/C++ 的头文件，这个头文件包含了所有 native 方法的原型。
 2. **编写本地代码**：使用C/C++编写本地方法的实现，并确保方法签名与生成的头文件中的原型匹配。
 3. **编译本地代码**：将C/C++代码编译成动态链接库（DLL，在Windows上），共享库（SO，在Linux上）。
 4. **加载本地库**：在Java程序中，使用System.loadLibrary()方法来加载你编译好的本地库，这样JVM就能找到并调用native方法的实现了。
