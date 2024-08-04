@@ -2,6 +2,102 @@
 
 [TOC]
 
+```
+1- JAVA 基础 - 知识点 
+    1 JAVA 基础 - 实践常用
+        1.1 代理模式
+            1 什么是代理模式, 介绍一下静态代理
+            2 什么是动态代理? 动态代理和静态代理的区别是什么?
+            3 什么是 JDK 动态代理
+            4 什么是 CGLIB 动态代理
+            5 JDK动态代理和CGLIB动态代理对比
+        1.2 泛型
+            1 什么是泛型
+            2 泛型的上下限如何理解
+            3 泛型的类型擦除
+            4 泛型中的 ? 代表什么
+        1.3 反射
+            1 什么是反射
+            2 可以用简单的语言描述一下反射执行吗
+            3 反射在平时写代码和框架中的应用场景?
+            4 你认为反射有什么优缺点?
+        1.4 注解
+            1 什么是注解?
+            2 JAVA 注解的作用域有了解吗?
+        1.5 异常
+            1 JAVA 中异常的分类
+            2 throws 和 throw 的区别
+            3 下面的语句会返回什么值?
+            4 JVM 处理异常的机制
+        1.6 SPI 机制
+            1 什么是 SPI 机制
+            2 SPI 和 API 的区别
+        1.7 JAVA 中的序列化
+            1 序列化和常见场景有哪些?
+            2 常见的序列化协议有哪些？
+            3 如果有些字段不想进行序列化怎么办？
+            4 为什么不推荐使用 JDK 自带的序列化？
+            5 怎么把一个对象从一个 JVM 转移到另一个 JVM?
+            6 将对象转为二进制字节流具体怎么实现?
+    2 JAVA 基础 - 常见知识点
+        2.1 Java 基础类型
+            1 Java 中的几种基本数据类型是什么?对应的包装类型是什么?各自占用多少字节呢?
+            2 基本数据类型一定在栈中吗?
+        2.2 Object 以及 String
+            1 == 与 equals 的区别? hashCode 与 equals 的区别?
+            2 HashCode 的作用及注意点
+            3 String 、StringBuffer 和 StringBuilder 的区别是什么? 
+            4 String 为什么是不可变的?
+            5 String s1 = new String("abc"); 这段代码创建了几个字符串对象?
+        2.3 包装类型 + 装箱拆箱
+            1 有了基本数据类型，为什么需要包装类型?
+            2 包装类型的缓存机制了解么?
+            3 自动装箱与拆箱了解吗?原理是什么?
+            4 自动装箱有什么缺点? 
+            5 Java 为什么要有 Integer ? 为什么又要保留 int 类型?
+        2.4 深拷贝与浅拷贝
+            1 深拷⻉和浅拷⻉区别了解吗?什么是引用拷⻉?
+            2 实现深拷贝的三种方式是什么? 
+        2.5 IO 相关
+            1 BIO,NIO,AIO 有什么区别?
+            2 什么是 IO 多路复用(NIO 一般使用什么方式)
+            3 实现 IO 多路复用有哪些方式? 
+            4 你知道什么框架中使用到了 NIO 吗? 
+        2.6 浮点数与Decimal
+            1 为什么浮点数计算会丢失精度？如何解决？
+            2 为什么用 BigDecimal 而不使用 double? 
+        2.7 面向对象
+            1 内部类和内部匿名类了解吗?
+            2 所有对象都存放在堆上吗 - JIT 逃逸分析
+            3 抽象类和接口有什么共同点和区别
+            4 怎么理解面向对象, 简单说说封装继承多态?
+            5 多态解决了什么问题 ? 
+            6 面向对象的六大设计原则是什么? 如何理解 ? 
+            7 重写和重载需要注意什么？
+            8 抽象类和普通类有什么区别
+            9 抽象类可以使用 final 修饰吗?
+            10 接口中可以定义哪些方法?
+            11 抽象类可以被实例化吗 ?
+            12 接口可以包含构造函数吗?
+            13 非静态内部类和静态内部类的区别?
+            14 非静态内部类可以直接访问外部方法, 编译器是怎么做到的?
+        2.8 Java 特性
+            1 Java 的特性有什么
+            2 为什么 JAVA 是跨平台的
+            3 JVM、JDK、JRE 三者关系
+            4 为什么 Java 解释和编译都有
+            5 JVM 是什么
+            6 编译型语言和解释型语言的语言
+        2.9 JDK1.8 三大特性
+            1 JAVA 中的 stream 流,常用的 API 介绍一下
+            2 Stream 流中的并行 API 是什么
+            3 CompletableFuture 如何使用
+            2.10 Native 方法
+            1 Native 方法是什么? 解释一下
+        2.11 笔试
+            1 有一个学生类，想按照分数排序，再按学号排序，应该怎么做
+```
+
 ## 1 JAVA 基础 - 实践常用
 
 ### 1.1 代理模式
@@ -203,14 +299,14 @@ after method send
 
 #### 4 什么是 CGLIB 动态代理
 
-CGLIB动态代理机制是为了解决JDK动态代理的一个致命问题：**只能代理实现了接口的类。**CGLIB是一个字节码生成库，允许我们在运行时对字节码进行修改和动态生成。CGLIB 通过继承方式实现代理。**在 CGLIB 代理机制中，有两个核心：MethodInterceptor 接口和 Enhancer 类**
+CGLIB动态代理机制是为了解决JDK动态代理的一个致命问题： **只能代理实现了接口的类。** CGLIB是一个字节码生成库，允许我们在运行时对字节码进行修改和动态生成。CGLIB 通过继承方式实现代理。**在 CGLIB 代理机制中，有两个核心：MethodInterceptor 接口和 Enhancer 类**
 
 - 通过自定义 MethodInterceptor 并重写 intercept 方法来定义代理类，四个参数
 - 通过 Enhancer类来动态获取被代理类，当代理类调用方法的时候，实际调用的是 MethodInterceptor 中的 intercept 方法
 - CGLIB动态代理的使用步骤：
-  - 定义一个目标类**（目标类）**
+  - 定义一个目标类 **（目标类）** 
   - 自定义 MethodInterceptor 并重写 intercept 方法，intercept 用于拦截增强被代理类的方法**（定义代理类）**
-  - 通过 Enhancer 类的 create()创建代理类**（代理类实例对象）**
+  - 通过 Enhancer 类的 create()创建代理类 **（代理类实例对象）** 
 
 CGLIB 动态代理代码示例如下:
 
@@ -402,7 +498,7 @@ Java 的泛型是伪泛型，因为 Java 在编译期间，所有的泛型类型
 
 #### 1 什么是反射
 
-**反射的作用：运行时识别一个对象的类型和类的信息，把java类中的各种成分映射成一个个的Java对象。**例如：一个类有：成员变量、方法、构造方法、包等等信息，利用反射技术可以对一个类进行解剖，把个个组成部分映射成一个个对象。
+**反射的作用：运行时识别一个对象的类型和类的信息，把java类中的各种成分映射成一个个的Java对象。** 例如：一个类有：成员变量、方法、构造方法、包等等信息，利用反射技术可以对一个类进行解剖，把个个组成部分映射成一个个对象。
 
 想要理解反射，需要理解两个知识：Class 类和 Java 中的类加载机制
 
@@ -415,9 +511,9 @@ Java 的泛型是伪泛型，因为 Java 在编译期间，所有的泛型类型
 
 **类加载机制和类的加载：**
 
-![image-20240801223022431](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801223022431.png)
+![image-20240804151516416](./assets/image-20240804151516416.png)
 
-![image-20240801223030437](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801223030437.png)
+![image-20240801223030437](./assets/image-20240801223030437.png)
 
 对于一个Java类：Car 类型以及其产生的对象：Car c1 = new Car()，在内存中共产生三个结构：
 
@@ -537,7 +633,7 @@ class对象是可以说是反射中最常用的，获取class对象的方式的�
 
 #### 1 JAVA 中异常的分类
 
-![image-20240801223712726](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801223712726.png)
+![image-20240804151145338](./assets/image-20240804151145338.png)
 
 **异常分类：**
 
@@ -633,7 +729,7 @@ public static void simpleTryCatch() {
 
 #### 1 什么是 SPI 机制
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801224131873.png" alt="image-20240801224131873" style="zoom:80%;" />
+<img src="./assets/image-20240801224131873.png" alt="image-20240801224131873" style="zoom:80%;" />
 
 **什么是 SPI 机制：核心思想就是解耦**
 
@@ -734,7 +830,7 @@ transient 关键字的作用是：阻止实例中那些用此关键字修饰的�
 
 #### 1 Java 中的几种基本数据类型是什么?对应的包装类型是什么?各自占用多少字节呢?
 
-![image-20240801225254556](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801225254556.png)
+![image-20240801225254556](./assets/image-20240801225254556.png)
 
 这八种基本类型都有对应的包装类分别为：Byte、Short、Integer、Long、Float、Double、Character、Boolean 。
 
@@ -889,19 +985,15 @@ int n = i;   //拆箱
 
 **什么是自动拆装箱？**
 
-- 装箱
-
-  ：将基本类型用它们对应的引用类型包装起来；
+- 装箱：将基本类型用它们对应的引用类型包装起来；
 
   - 调用了包装类的 valueOf() 方法
   - Integer i = 10 等价于 Integer i = Integer.valueOf(10)
-
-- 拆箱
-
-  ：将包装类型转换为基本数据类型；
+  
+- 拆箱：将包装类型转换为基本数据类型；
 
   - 调用了包装类的 xxxValue()方法
-  - int n = i 等价于 int n = i.intValue()
+- int n = i 等价于 int n = i.intValue()
 
 **Integer 和 int 类型相比，会自动拆箱，然后比较栈内存中的数据；**
 
@@ -959,7 +1051,7 @@ Integer 对应是 int 类型的包装类，可以把属性也就是数据跟处�
 
 #### 1 深拷⻉和浅拷⻉区别了解吗?什么是引用拷⻉?
 
-![image-20240801230315689](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801230315689.png)
+![image-20240804151259487](./assets/image-20240804151259487.png)
 
 - 浅拷贝：浅拷贝会在堆上创建一个新的对象（区别于引用拷贝的一点），不过，如果原对象内部的属性是引用类型的话，浅拷贝会直接复制内部对象的引用地址，也就是说拷贝对象和原对象共用同一个内部对象。
   - 直接调用 clone() 则是浅拷贝
@@ -1020,7 +1112,7 @@ IO 多路复用模型中：
 - 线程首先发起 select 调用，询问内核数据是否准备就绪，等内核把数据准备好了
 - 用户线程再发起 read 调用。read 调用的过程（数据从内核空间 -> 用户空间）还是阻塞的。
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801230600626.png" alt="image-20240801230600626" style="zoom: 25%;" />
+<img src="./assets/image-20240804151318135.png" alt="image-20240804151318135" style="zoom: 25%;" />
 
 NIO主要有三大核心部分：**Channel(通道)，Buffer(缓冲区), Selector**。
 
@@ -1377,7 +1469,7 @@ Java 能支持跨平台，主要依赖于 JVM 关系比较大。
 
 #### 3 JVM、JDK、JRE 三者关系
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801232743214.png" alt="image-20240801232743214" style="zoom:25%;" />
+<img src="./assets/image-20240801232743214.png" alt="image-20240801232743214" style="zoom:25%;" />
 
 它们之间的关系如下:
 
@@ -1389,7 +1481,7 @@ Java 能支持跨平台，主要依赖于 JVM 关系比较大。
 
 #### 4 为什么 Java 解释和编译都有
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801232753120.png" alt="image-20240801232753120" style="zoom:25%;" />
+<img src="./assets/image-20240801232753120.png" alt="image-20240801232753120" style="zoom:25%;" />
 
 首先在Java经过编译之后生成字节码文件，接下来进入JVM中，就有两个步骤编译和解释。
 
@@ -1457,7 +1549,7 @@ int sum = numbers.stream().mapToInt(Integer::intValue).sum();
 
 Stream串行流与并行流的主要区别：
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240801233445869.png" alt="image-20240801233445869" style="zoom:25%;" />
+![image-20240804151346967](./assets/image-20240804151346967.png)
 
 对CPU密集型的任务来说，并行流使用ForkJoinPool线程池，为每个CPU分配一个任务，这是非常有效率的. 但是如果任务不是CPU密集的，而是I/O密集的，并且任务数相对线程数比较大，那么直接用ParallelStream并不是很好的选择。
 
