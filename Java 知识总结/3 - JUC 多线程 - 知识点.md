@@ -2,6 +2,65 @@
 
 [TOC]
 
+```
+3 - JUC 多线程 - 知识点
+    1 线程基础知识
+        3.1  线程与进程的区别
+        3.2 并行和并发有什么区别
+        3.3 创建线程的方式有哪些（高频）
+        3.4 线程包含哪些状态-状态之间如何变化（高频）
+        3.5 新建三个线程，如何保证它们按顺序执行
+        3.6 wait 和 sleep 方法有什么不同
+        3.7 如何停止一个正在运行的线程
+        3.8 如何获取 Java 线程执行结果
+        3.9 线程正确的中断方式 - interrupt
+        3.10 使用多线程要注意哪些问题？
+        3.11 保证数据的一致性有哪些方案呢？
+    2 线程中并发安全（常问 - 锁机制）
+        2.0 - 1 多线程带来的并发安全问题
+        2.0 - 2 如何保证线程安全
+        2.0- 3 Java 中有哪些常用的锁, 在什么场景下使用
+        2.1 - 1 synchronized 关键字的底层原理
+        2.1 - 2 锁升级过程详解
+        2.2 - 1 谈一谈 JMM - Java内存模型
+        2.2 - 2 谈一谈 JMM 中的重排序、顺序一致性以及 happens-before
+        2.2 - 3 如何理解 JMM 与 happens-before
+        2.3 谈谈 CAS
+        2.4 如何理解 volatile
+        2.5 什么是抽象队列同步器 AQS
+        2.6 ReentrantLock 的实现原理
+        2.7 死锁产生的条件是什么
+        2.8 并发出现问题的根本原因是什么？
+        2.9 并发读写锁 ReentrantReadWriteLock
+        2.10 条件通知等候 Condition
+        2.11 并发线程唤醒类 Lock Support
+        2.12 如何理解可重入锁? sychronized 支持可重入吗? 如何实现?
+        2.13 Java中想实现一个乐观锁，都有哪些方式？
+        2.14 指令重排序的原理是什么？
+        2.15 什么是公平锁和非公平锁
+        2.16 ReentrantLock是怎么实现公平锁的？
+    3 线程池（常问 - 项目）
+        3.1 线程池的核心参数与执行原理
+        3.2 自定义线程池中哪些常见的阻塞队列
+        3.3 如何确定核心线程数
+        3.4 线程池的种类有哪些
+        3.5 为什么不推荐使用 Executors 类
+        3.6 拒绝策略
+        3.7 线程池 - 源码解析
+        3.8 submit 提交的原理
+        3.9 定时任务 ScheduledThreadPoolExecutor
+        3.10 线程池中shutdown ()，shutdownNow()这两个方法有什么作用？
+        3.11 提交给线程池中的任务可以被撤回吗？
+    4 使用场景
+        4.1 CountDownLatch - 等待多个线程完成
+        4.2 Semaphore - 控制并发线程数量
+        4.3 CyclicBarrier 公共屏障点
+        4.4 ThreadLocal  以及其注意事项
+        4.5 CompletableFuture
+        4.6 原子操作类 Atomic - 底层是 CAS
+        4.7 多线程打印奇偶数，怎么控制打印的顺序(重点重点重点!!!)
+```
+
 ## 1 线程基础知识
 
 ### 3.1  线程与进程的区别
@@ -14,7 +73,7 @@
 
 **进程就是用来加载指令，管理内存，管理IO的。**在电脑上开启一个浏览器、开启一个文本都是开启了一个进程。  **当一个程序被运行，从磁盘加载这个程序到内存中，这时候就开启了一个进程。**
 
-![image-20240804141538070](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141538070.png)
+![image-20240804141538070](./assets/image-20240804141538070.png)
 
 **进程和线程的区别是什么：\**一个线程就是一个指令流，将指令流中的一条条指令以一定的顺序交给CPU执行，所以线程是使用CPU的\**最小单位**。一个进程内可以划分为多个进程。
 
@@ -49,7 +108,7 @@
 
 ### 3.2 并行和并发有什么区别
 
-![image-20240804141613996](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141613996.png)
+![image-20240804141613996](./assets/image-20240804141613996.png)
 
 **单核CPU的情况下：**
 
@@ -58,7 +117,7 @@
 - 总结一句话就是：微观串行，宏观并行
 - **一般将这种线程轮流使用CPU的方式叫做并发执行（Concurrent）**
 
-![image-20240804141622447](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141622447.png)
+![image-20240804141622447](./assets/image-20240804141622447.png)
 
 **多核CPU情况下：**
 
@@ -151,7 +210,7 @@ class YieldExample {
 
 ### 3.4 线程包含哪些状态-状态之间如何变化（高频）
 
-![image-20240804141637313](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141637313.png)
+![image-20240804141637313](./assets/image-20240804141637313.png)
 
 Java中有个 Thread 类中有个枚举类 State，将**线程状态分为了六个**：
 
@@ -521,7 +580,7 @@ synchronized关键字的使用方法：**并发控制 - 保证原子性、有序
 
 **快手面经 - synchronized关键字的底层原理是什么？**
 
-![image-20240804141811209](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141811209.png)
+![image-20240804141811209](./assets/image-20240804141811209.png)
 
 synchronized是java提供的原子性内置锁，这种内置的并且使用者看不到的锁也被称为**监视器锁**，使用synchronized之后，其执行流程如下：
 
@@ -541,24 +600,16 @@ synchronized是java提供的原子性内置锁，这种内置的并且使用者�
 
 **synchronized 底层如何实现 - Monitor**
 
-![image-20240804141827411](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141827411.png)
+![image-20240804141827411](./assets/image-20240804141827411.png)
 
 synchronized 底层是使用 **monitor 监视器**对代码块进行上锁和解锁的过程：
 
 - monitorenter 用于对对象进行加锁，线程获取锁需要使用对象去关联monitor
-
 - monitorexit 用于对对象进行解锁（两次解锁防止异常抛出）
-
 - monitor 监视器中的结构如下：
-
   - **Owner**：当第一个线程 Thread-1 **获取锁**时，设置 monitor 监视器的 Owner 为 Thread-1
-
   - **WaitSet**：关联调用了 **wait** 方法的线程，记录处于 Waiting 状态的线程
-
-  - EntryList
-
-    ：
-
+  - EntryList：
     - 当第二个线程 Thread-2 获取锁失败，则需要将 Thread-2 设置为 BLOCKED，并将其放入到 EntryList 中进行等待
     - 当线程 Thread-1 执行完之后，会让EntryList 中的等待线程进行争抢（**非公平**）
 
@@ -586,7 +637,7 @@ synchronized 底层是使用 **monitor 监视器**对代码块进行上锁和解
 - 可以根据 state 字段判断当前的锁类型
 - 可以根据 markdown 中字段获取到**关联**到哪个 monitor 重量级锁
 
-![image-20240804141842546](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141842546.png)
+![image-20240804141842546](./assets/image-20240804141842546.png)
 
 
 
@@ -607,7 +658,7 @@ synchronized 底层是使用 **monitor 监视器**对代码块进行上锁和解
 
 几种锁会随着竞争情况逐渐升级，锁的升级很容易发生，但是锁降级发生的条件就比较苛刻了，锁降级发生在 STW 期间，当 JVM 进入安全点的时候，会检查是否有闲置的锁，然后进行降级。
 
-![image-20240804141850942](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141850942.png)
+![image-20240804141850942](./assets/image-20240804141850942.png)
 
 **先简单看一下锁升级的过程:**
 
@@ -617,7 +668,7 @@ synchronized 底层是使用 **monitor 监视器**对代码块进行上锁和解
 
 **synchronized 锁升级 - 偏向锁**
 
-![image-20240804141901745](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141901745.png)
+![image-20240804141901745](./assets/image-20240804141901745.png)
 
 Hotspot 的作者经过以往的研究发现大多数情况下**锁不仅不存在多线程竞争，而且总是由同一线程多次获得**，于是引入了偏向锁。
 
@@ -647,7 +698,7 @@ Hotspot 的作者经过以往的研究发现大多数情况下**锁不仅不存�
 
 **synchronized 锁升级 - 轻量级锁如何实现**
 
-![image-20240804141918987](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804141918987.png)
+![image-20240804141918987](./assets/image-20240804141918987.png)
 
 多个线程在不同时段获取同一把锁，即不存在锁竞争的情况，也就没有线程阻塞。针对这种情况，JVM 采用轻量级锁来避免线程的阻塞与唤醒。
 
@@ -657,22 +708,12 @@ Hotspot 的作者经过以往的研究发现大多数情况下**锁不仅不存�
 **轻量级锁的加锁过程：**
 
 1. 锁对象 Obj 对象头中的 Mark Word 刚开始时无锁状态
-
-2. 线程的虚拟机栈中创建一个
-
-   栈帧
-
-   ，栈帧中包含了一个
-
-   锁记录 Lock Record：
-
+2. 线程的虚拟机栈中创建一个栈帧，栈帧中包含了一个锁记录 Lock Record：
    1. 锁记录中的 Object Reference 指向了锁对象 Obj
    2. 线程尝试用 CAS 将锁的 Mark Word 替换为指向锁记录的指针。
    3. 成功，当前线程获得锁：锁对象 Obj 拥有了轻量级锁记录的地址；轻量级锁记录中保存了锁对象 Obj 原有的 hashcode-age 等信息。
    4. 失败，表示 Mark Word 已经被替换成了其他线程的锁记录，说明在与其它线程竞争锁，当前线程就尝试使用自旋来获取锁。
-
 3. 适应性自旋，简单来说就是线程如果自旋成功了，则下次自旋的次数会更多，如果自旋失败了，则自旋的次数就会减少。
-
 4. 如果自旋到一定程度（和 JVM、操作系统相关），依然没有获取到锁，称为自旋失败，那么这个线程会阻塞。同时这个锁就会**升级成重量级锁**。
 
 **轻量级锁的释放过程：**
@@ -745,7 +786,7 @@ JMM 采用了共享内存模型解决了并发编程的线程之间存在两个�
 - 线程间如何通信？即：线程之间以何种机制来交换信息
 - 线程间如何同步？即：线程以何种机制来控制不同线程间发生的相对顺序
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142123115.png" alt="image-20240804142123115" style="zoom:25%;" />
+<img src="./assets/image-20240804142123115.png" alt="image-20240804142123115" style="zoom:25%;" />
 
 在运行时数据区中，堆和方法区是共享的，所以内存可见性也是针对堆中的共享变量。
 
@@ -1187,7 +1228,7 @@ AQS核心思想是，如果被请求的共享资源空闲，那么就将当前�
 
 这个机制主要用的是CLH队列的变体实现的，将暂时获取不到锁的线程加入到队列中。AQS是通过将每条请求共享资源的线程封装成一个节点来实现锁的分配。
 
-![image-20240804142455965](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142455965.png)
+![image-20240804142455965](./assets/image-20240804142455965.png)
 
 AQS 内部使用了一个 volatile 的变量 state 来作为资源的标识。同时定义了几个获取和改变 state 的 protected 方法，子类可以覆盖这些方法来实现自己的逻辑：三种方法均是原子操作。
 
@@ -1275,7 +1316,7 @@ public final void accquire(int arg) {
    2. 否则，如果当前结点的前驱结点不是 head 结点或者获取同步失败，则应该用 park 使当前线程阻塞，并将中断设置为 true
    3. 综上，结点进入等待队列后，只有头结点的线程是处于活跃状态的，其他节点需要调用 park 使它进入阻塞状态。
 
-![image-20240804142517394](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142517394.png)
+<img src="./assets/image-20240804142517394.png" alt="image-20240804142517394" style="zoom: 25%;" />
 
 **释放资源：**
 
@@ -1348,7 +1389,7 @@ ReentrantLock 重入锁，是实现 Lock 接口的一个类，也是在实际编
 - 公平参数设置为 true 时，表示公平锁；公平锁的效率在多线程下较低，容易导致低吞吐量。
 - 公平参数设置为 false 时（默认参数设置），表示非公平锁。
 
-![image-20240804142537834](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142537834.png)
+<img src="./assets/image-20240804142537834.png" alt="image-20240804142537834" style="zoom:25%;" />
 
 公平锁工作机制：公平锁每次都是从同步队列中的第一个节点获取到锁，而非公平性锁则不一定，有可能刚释放锁的线程能再次获取到锁。
 
@@ -1513,7 +1554,7 @@ try {
 
 ### 2.10 条件通知等候 Condition
 
-![image-20240804142619541](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142619541.png)
+<img src="./assets/image-20240804142619541.png" alt="image-20240804142619541" style="zoom:25%;" />
 
 每个对象都可以调用 Object 的 wait/notify 方法来实现等待/通知机制。而 Condition 接口也提供了类似的方法。Condition 主要功能如下：
 
@@ -1738,7 +1779,7 @@ synchronized底层是利用计算机系统mutex Lock实现的。每一个可重�
 
 我们看这个例子，A和C之间存在数据依赖关系，同时B和C之间也存在数据依赖关系。因此在最终执行的指令序列中，C不能被重排序到A和B的前面，如果C排到A和B的前面，那么程序的结果将会被改变。但A和B之间没有数据依赖关系，编译器和处理器可以重排序A和B之间的执行顺序。
 
-![image-20240804142725207](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142725207.png)
+<img src="./assets/image-20240804142725207.png" alt="image-20240804142725207" style="zoom:25%;" />
 
 
 
@@ -1870,7 +1911,7 @@ public boolean tryLock() {
   - 构建线程的时候设置线程的名称，查日志的时候就方便知道是哪个线程执行的代码。
 - **handler：拒绝策略**，当所有线程都在繁忙，workQueue也放满的时候，会触发拒绝策略
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142752299.png" alt="image-20240804142752299" style="zoom:50%;" />
+<img src="./assets/image-20240804142752299.png" alt="image-20240804142752299" style="zoom: 25%;" />
 
 **执行原理：**
 
@@ -1888,7 +1929,7 @@ public boolean tryLock() {
 
 **线程池的五种状态（shutdown 和 shutdownNow 的区别）**
 
-![image-20240804142804876](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142804876.png)
+<img src="./assets/image-20240804142804876.png" alt="image-20240804142804876" style="zoom:33%;" />
 
 1. RUNNING：能够接收新任务，以及对已添加的任务进行处理。
 2. SHUTDOWN：调用 shutdown 方法，线程池就会转换成 SHUTDOWN 状态，此时线程池不再接收新任务，但能继续处理已添加到队列中的任务。
@@ -1957,7 +1998,7 @@ shutdown 方法和 shutdownNow 方法的主要区别就是，shutdown 之后还�
   - LinkedBlockingQueue 拥有头节点和尾节点两把锁
 - 再使用过程中一般会使用 LinkedBlockingQueue，且设置最大容量值
 
-![image-20240804142826075](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142826075.png)
+<img src="./assets/image-20240804142826075.png" alt="image-20240804142826075" style="zoom:33%;" />
 
 
 
@@ -2266,7 +2307,7 @@ final void runWorker(Worker w) {
 
 **线程是如何获取任务以及如何实现超时**
 
-![image-20240804142919335](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142919335.png)
+<img src="./assets/image-20240804142919335.png" alt="image-20240804142919335" style="zoom:33%;" />
 
 线程在执行完任务之后，会继续从 getTask 方法中获取任务，获取不到就会退出。接下来我们就来看一看 getTask 方法的实现：
 
@@ -2395,7 +2436,7 @@ public abstract class AbstractExecutorService implements ExecutorService {
 
 ### 3.9 定时任务 ScheduledThreadPoolExecutor
 
-![image-20240804142939160](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142939160.png)
+<img src="./assets/image-20240804142939160.png" alt="image-20240804142939160" style="zoom:33%;" />
 
 定时任务 ScheduledThreadPoolExecutor 类有两个用途：指定时间延迟后执行任务；周期性重复执行任务。
 
@@ -2421,11 +2462,11 @@ ScheduledThreadPoolExecutor 继承了 ThreadPoolExecutor，并实现了Scheduled
 
 scheduleAtFixedRate 方法在 initialDelay 时长后第一次执行任务，以后每隔 period 时长再次执行任务。**注意，period 是从任务开始执行算起的。\**开始执行任务后，定时器每隔 period 时长\**检查该任务是否完成**，如果完成则再次启动任务，否则等该任务结束后才启动任务。看下图：
 
-![image-20240804142948323](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804142948323.png)
+<img src="./assets/image-20240804142948323.png" alt="image-20240804142948323" style="zoom:33%;" />
 
 scheduleWithFixedRate 在 initialDelay 时长后第一次执行任务，以后每当任务执行**完成后**，等待delay 时长，再次执行任务。
 
-![image-20240804143009110](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143009110.png)
+<img src="./assets/image-20240804143009110.png" alt="image-20240804143009110" style="zoom:33%;" />
 
 **DelayedWorkQueue 核心原理：堆**
 
@@ -2583,7 +2624,7 @@ public static void main(String[] args) {
 
 CountDownLatch 是一个同步工具类，它允许一个或多个线程一直等待，直到其他线程的操作执行完后再执行。
 
-![image-20240804143031461](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143031461.png)
+<img src="./assets/image-20240804143031461.png" alt="image-20240804143031461" style="zoom:33%;" />
 
 CountDownLatch 用来进行线程同步协作，等待所有线程完成倒计时（等待其他多个线程完成某件事情之后才能执行），即可以让某个线程一直等待直到倒计时结束，再开始执行。
 
@@ -2591,7 +2632,7 @@ CountDownLatch 用来进行线程同步协作，等待所有线程完成倒计�
 - 使用 `await()` 用来等待计数归0
 - 使用 `countDown()` 用来让计数减1
 
-![image-20240804143040666](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143040666.png)
+<img src="./assets/image-20240804143040666.png" alt="image-20240804143040666" style="zoom:33%;" />
 
 **使用场景1：可以使用 CountDownLatch 批量将数据库中的数据导入ES**
 
@@ -2803,7 +2844,7 @@ ThreadLocal 是多线程中对于解决线程安全的一个操作类，它会**
 - ThreadLocal 通过空间上的牺牲实现了线程内部的资源共享。
 - 举例：使用 JDBC 操作数据库时，会将每一个线程的 Connection 放入各自的 ThreadLocal中，从而保证每个线程在各自的 Connection 上进行数据库的操作，避免了 A 线程关闭了 B 线程的连接。
 
-![image-20240804143112181](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143112181.png)
+<img src="./assets/image-20240804143112181.png" alt="image-20240804143112181" style="zoom:33%;" />
 
 从内存结构图，我们可以看到：
 
@@ -2917,7 +2958,7 @@ Entry 继承了弱引用 `WeakReference<ThreadLocal<?>>`，它的 value 字段�
 - key为使用弱引用的 ThreadLocal 实例
 - value 为线程变量的副本
 
-![image-20240804143128618](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143128618.png)
+<img src="./assets/image-20240804143128618.png" alt="image-20240804143128618" style="zoom:33%;" />
 
 注意，Entry 的 key 为弱引用，意味着当 ThreadLocal 外部强引用被置为 null 时，根据可达性分析，ThreadLocal 实例此时没有任何一条链路引用它，所以系统 GC 的时候 ThreadLocal 会被回收。
 
@@ -3052,7 +3093,7 @@ public class InheritableThreadLocalTest {
 }
 ```
 
-![image-20240804143147676](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143147676.png)
+<img src="./assets/image-20240804143147676.png" alt="image-20240804143147676" style="zoom:25%;" />
 
 可以看到，当第一个线程覆盖了父线程的值后，后面的子线程就拿不到父线程的值了。
 

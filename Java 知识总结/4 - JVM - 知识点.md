@@ -2,6 +2,50 @@
 
 [TOC]
 
+```
+4 - JVM - 知识点
+    1 JVM组成
+        1.1 JVM介绍以及组成部分
+        1.2 什么是程序计数器
+        1.3 什么是Java的堆（详细一点）
+        1.4 什么是虚拟机栈
+        1.5 什么是方法区（元空间）
+        1.6  什么是直接内存
+        1.7 JVM 如何运行 Java 代码
+        1.8 方法区中的 Class 数据与堆中的 Class 对象是什么关系
+        1.9 String 在 JVM 中保存在哪里
+        1.10 OOM发生在JVM的哪一块内存空间？
+    2 类加载器
+        2.1 什么是类加载器，类加载器有哪些
+        2.2 什么是双亲委派机制
+        2.3 说一下类加载过程（重点!!!）
+        2.4 对象的创建过程(重点!!!)
+        2.5 对象的内存布局是什么
+        2.6 对象的访问定位有哪两种方式
+        2.7 对象的生命周期
+    3 垃圾回收
+        3.1 对象什么时候可以被GC回收
+        3.2 JVM 垃圾回收算法有哪些
+        3.3 说一下JVM中的分代回收
+        3.4 说一下 JVM 中有哪些垃圾回收器
+        3.5 详细讲一下 G1 垃圾回收器（JDK 9 之后默认）
+        3.6 强引用、软引用、弱引用以及虚引用别
+        3.7 Minor GC 和 Full GC ？什么时候发生？
+        3.8 创建的对象在新生代还是老年代？
+        3.9 Full GC 的触发条件有哪些
+        3.10 CMS 和 G1 收集器的区别
+        3.11 什么情况下使用CMS，什么情况使用G1?
+        3.12 GC只会对堆进行GC吗？
+    4 JVM实践 - 结合实践操作来看
+        4.1 JVM 的调优参数在哪里设置
+        4.2 JVM 调优参数有哪些
+        4.3 JVM 性能监控 - 命令行 + 可视化
+        4.4 Java 内存泄漏的排查思路
+        4.5 CPU 飙高排查方案以及思路（常问 ）
+        4.8 系统运行缓慢怎么办 - FUll GC 次数过高、CPU 飙高(重点!!!!)
+        4.9 死锁如何检测
+```
+
 ## 1 JVM组成
 
 ### 1.1 JVM介绍以及组成部分
@@ -12,7 +56,7 @@ JVM是什么 - **Java虚拟机**
   - 一次编写，到处运行（JVM底层，程序运行与底层进行分离）
   - 自动的内存管理和垃圾回收机制
 
-![image-20240804143717713](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143717713.png)
+![image-20240804143717713](./assets/image-20240804143717713.png)
 
 **JVM组成部分：类机载器 + 运行时数据区 + 执行引擎**
 
@@ -42,7 +86,7 @@ JVM是什么 - **Java虚拟机**
   - 可以使用 `javap -v xx.class` 打印堆栈大小，局部变量的数量和方法的参数
   - IDEA Build → Build Project → 查看 target 包 → jvm包下有Application，输入 javap命令
 
-![image-20240804143739783](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143739783.png)
+![image-20240804143739783](./assets/image-20240804143739783.png)
 
 - 可以看到代码的执行行号：0 3 5 8
   - 0 对应获取一个静态变量 `#2` ，即获取静态变量 System.out
@@ -52,7 +96,7 @@ JVM是什么 - **Java虚拟机**
 - 可以看出，二进制字节码中有多行代码进行执行，执行顺序就是代码行号
   - 程序计数器的作用就是记录每一个线程的**行号**（0-3-5-8）
 
-![image-20240804143751469](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143751469.png)
+![image-20240804143751469](./assets/image-20240804143751469.png)
 
 **程序计数器的作用，为什么是私有的？**
 
@@ -65,7 +109,7 @@ Java程序是支持多线程一起运行的，多个线程一起运行的时候c
 
 ### 1.3 什么是Java的堆（详细一点）
 
-![image-20240804143802633](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143802633.png)
+![image-20240804143802633](./assets/image-20240804143802633.png)
 
 Java堆是一个**线程共享的区域**：
 
@@ -108,7 +152,7 @@ Java堆是一个**线程共享的区域**：
 
 ### 1.4 什么是虚拟机栈
 
-![image-20240804143816919](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143816919.png)
+<img src="./assets/image-20240804143816919.png" alt="image-20240804143816919" style="zoom:33%;" />
 
 Java Virtual Machine Stacks - Java虚拟机栈
 
@@ -168,7 +212,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
 
 ### 1.5 什么是方法区（元空间）
 
-![image-20240804143845926](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143845926.png)
+<img src="./assets/image-20240804143845926.png" alt="image-20240804143845926" style="zoom:33%;" />
 
 方法区（元空间）主要存在于本地内存中，它和堆一样，属于各个**线程共享的内存区域**
 
@@ -181,7 +225,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
 
 **如何理解常量池？**
 
-![image-20240804143854954](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143854954.png)
+<img src="./assets/image-20240804143854954.png" alt="image-20240804143854954" style="zoom:33%;" />
 
 **常量池可以看作是一张表**，虚拟机指令根据这张常量表找到要执行的**类名、方法名、参数类型以及字面量**等信息。可以通过 javap 命令查看字节码结构：
 
@@ -191,7 +235,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
   - **方法定义：**存储类的方法字节码，即编译后的代码。
 - **第一部分是类的基本信息**，包含类所在地址、最后修改时间、检验码、编译来源、版本、访问修饰符等
 
-![image-20240804143904138](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143904138.png)
+<img src="./assets/image-20240804143904138.png" alt="image-20240804143904138" style="zoom:33%;" />
 
 - 第二部分就是类的常量池：其中主要形式为 
 
@@ -204,15 +248,15 @@ Java Virtual Machine Stacks - Java虚拟机栈
   - **虚拟机指令通过去查找常量池表来完成方法操作**
   - **虚拟机指令根据这张常量表找到要执行的类名、方法名、参数类型以及字面量等信息**
 
-![image-20240804143919422](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143919422.png)
+<img src="./assets/image-20240804143919422.png" alt="image-20240804143919422" style="zoom:33%;" />
 
-![image-20240804143926052](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143926052.png)
+<img src="./assets/image-20240804143926052.png" alt="image-20240804143926052" style="zoom:33%;" />
 
-![image-20240804143936635](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143936635.png)
+<img src="./assets/image-20240804143936635.png" alt="image-20240804143936635" style="zoom:33%;" />
 
 - **第三部分是方法定义：**其中主要形式为 **方法行号 - 方法命令 - 常量符号** 的形式展示每行执行指令，其中带 # 号的符号就需要去常量池中进行查表翻译
 
-![image-20240804143943904](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143943904.png)
+<img src="./assets/image-20240804143943904.png" alt="image-20240804143943904" style="zoom:33%;" />
 
 **上面是常量池的定义，什么是运行时常量池呢？**
 
@@ -221,7 +265,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
 
 总结：
 
-![image-20240804143954624](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804143954624.png)
+<img src="./assets/image-20240804143954624.png" alt="image-20240804143954624" style="zoom:33%;" />
 
 **为什么 JDK8 之后要移除永久代，将元空间放置在本地内存中？**
 
@@ -269,7 +313,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
 
 **原因如下：BIO的流程如下**
 
-![image-20240804144006601](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144006601.png)
+<img src="./assets/image-20240804144006601.png" alt="image-20240804144006601" style="zoom:33%;" />
 
 - Java代码不能直接访问系统的缓冲区
 - Java代码从用户态 - 内核态 执行工作：将系统缓冲区的内容拷贝到用户缓冲区
@@ -278,7 +322,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
 
 **NIO如何加快速度，NIO的流程如下：**
 
-![image-20240804144014669](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144014669.png)
+<img src="./assets/image-20240804144014669.png" alt="image-20240804144014669" style="zoom:33%;" />
 
 - NIO开辟了一个直接内存，作为一块缓冲区，Java代码可以从直接内存中进行读取
 
@@ -286,7 +330,7 @@ Java Virtual Machine Stacks - Java虚拟机栈
 
 ### 1.7 JVM 如何运行 Java 代码
 
-![image-20240804144024132](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144024132.png)
+<img src="./assets/image-20240804144024132.png" alt="image-20240804144024132" style="zoom:33%;" />
 
 Java 代码的执行过程要分两个阶段来阐述：**编译期 和 运行期。**
 
@@ -324,7 +368,7 @@ public class Test {
 }
 ```
 
-![image-20240804144041249](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144041249.png)
+<img src="./assets/image-20240804144041249.png" alt="image-20240804144041249" style="zoom:33%;" />
 
 1. JVM 完成 .class 文件加载之后，会创建一个名为"main"的线程，该线程会自动调用名为"main"的静态方法，这是 Java 程序的入口点；
 
@@ -334,7 +378,7 @@ public class Test {
 
 4. 当进行 calculate 方法调用的时候，虚拟机栈继续压入 calculate 方法对应的栈帧。
 
-   ![image-20240804144052194](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144052194.png)
+   <img src="./assets/image-20240804144052194.png" alt="image-20240804144052194" style="zoom:33%;" />
 
 5. 对于 age + 3 这条加法指令，在执行该指令前，JVM 会将操作数栈顶部的两个元素弹出，并将它们相加，然后将结果压入操作数栈中。
 
@@ -373,7 +417,7 @@ Java 中的 Class 也是一个类，所以 Class 对象也存放在堆当中，�
 
 所以，和问题 - 1一样，我们需要引用的最终目标是方法区中类有关的信息，所以类型指针直接指向方法区中的类型数据。
 
-![image-20240804144106375](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144106375.png)
+<img src="./assets/image-20240804144106375.png" alt="image-20240804144106375" style="zoom:33%;" />
 
 **问题 - 3: 那么堆中的Class对象有什么用？- 为反射提供接口**
 
@@ -390,9 +434,7 @@ JVM 中，使用了 OOP-KLASS 模型来表示 Java 对象：
 
 - instanceOopDesc：在 new 一个对象时，JVM 创建 instanceOopDesc 来表示这个对象，存放在
 
-  堆
-
-  区，其引用存放在栈区（即 Java 对象实例）。
+  堆区，其引用存放在栈区（即 Java 对象实例）。
 
   - 对象头：存储对象运行时记录信息，如hashcode、GC分代年龄、时间戳等;
   - 元数据指针：指向方法区的 instanceKlass 实例
@@ -460,7 +502,7 @@ String 保存在字符串常量池中，不同于其他对象，它的值是不�
 
 ### 2.1 什么是类加载器，类加载器有哪些
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144134495.png" alt="image-20240804144134495" style="zoom: 25%;" />
+<img src="./assets/image-20240804144134495.png" alt="image-20240804144134495" style="zoom: 25%;" />
 
 对于任意一个类，都需要由它的类加载器和这个类本身一同确定其在 JVM 中的唯一性。也就是说，如果两个类的加载器不同，即使两个类来源于同一个字节码文件，那这两个类就必定不相等(比如两个类的 Class 对象不equals )。
 
@@ -488,7 +530,7 @@ String 保存在字符串常量池中，不同于其他对象，它的值是不�
 
 ### 2.2 什么是双亲委派机制
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144148103.png" alt="image-20240804144148103" style="zoom:25%;" />
+<img src="./assets/image-20240804144148103.png" alt="image-20240804144148103" style="zoom:15%;" />
 
 双亲委派模型(Parent Delegation Model)是 Java 类加载器使用的一种机制，用于确保 Java 程序的稳定性和安全性。
 
@@ -517,7 +559,7 @@ String 保存在字符串常量池中，不同于其他对象，它的值是不�
 
 **Tomcat 如何打破双亲委派机制**
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144214953.png" alt="image-20240804144214953" style="zoom:25%;" />
+<img src="./assets/image-20240804144214953.png" alt="image-20240804144214953" style="zoom:25%;" />
 
 在部署项目时，可以将 war 包放在 tomcat 的 webapp 下，这意味着一个 tomcat 可以运行多个 Web 应用程序。
 
@@ -531,14 +573,14 @@ String 保存在字符串常量池中，不同于其他对象，它的值是不�
 
 JVM 类加载器负责将类的二进制数据加载到内存中，生成一个对应的 java.lang.Class 对象。
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144231507.png" alt="image-20240804144231507" style="zoom:25%;" />
+<img src="./assets/image-20240804144231507.png" alt="image-20240804144231507" style="zoom:25%;" />
 
 1. **首先是第一步的加载过程，由类加载器对类进行加载：**它是 Java 将字节码数据从不同的数据源读取到 JVM 中，并映射为 JVM 认可的数据结构（Class 对象），这里的数据源可能是各种各样的形态，如 jar 文件、class 文件，甚至是网络数据源等；如果输入数据不是ClassFile 的结构，则会抛出 ClassFormatError。
    - 通过类的全名，通过字节码获取类的二进制数据流
    - 解析类的二进制数据流 → **方法区**内的数据结构（Java类的构造函数、方法、字段等）
    - 创建**堆的 java.lang.Class 对象**，表示该类型，作为方法区的各种数据的访问入口
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144243113.png" alt="image-20240804144243113" style="zoom: 50%;" />
+<img src="./assets/image-20240804144243113.png" alt="image-20240804144243113" style="zoom: 50%;" />
 
 2. **第二步是验证过程：验证类是否符合JVM规范，进行安全性的检查**
 
@@ -575,7 +617,7 @@ JVM 类加载器负责将类的二进制数据加载到内存中，生成一个�
      - 直接引用通过对符号引用进行解析，找到引用的实际内存地址
      - 在运行时生成，依赖于具体的内存布局，访问对象的效率较高
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144301083.png" alt="image-20240804144301083" style="zoom:33%;" />
+<img src="./assets/image-20240804144301083.png" alt="image-20240804144301083" style="zoom:33%;" />
 
 5. 初始化阶段：对类的静态变量以及静态代码块执行初始化操作
 
@@ -599,7 +641,7 @@ JVM 类加载器负责将类的二进制数据加载到内存中，生成一个�
 
 **掌握对象每一步都在执行什么流程：**
 
-![image-20240804144429715](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144429715.png)
+<img src="./assets/image-20240804144429715.png" alt="image-20240804144429715" style="zoom:33%;" />
 
 **Step1：类加载检查**
 
@@ -706,9 +748,9 @@ JVM 类加载器负责将类的二进制数据加载到内存中，生成一个�
 
 如下图：栈帧中存放了参数、局部变量、返回地址；堆中则存放了对象实例或数组。
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144514835.png" alt="image-20240804144514835" style="zoom:25%;" />
+<img src="./assets/image-20240804144514835.png" alt="image-20240804144514835" style="zoom:25%;" />
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144525309.png" alt="image-20240804144525309" style="zoom:25%;" />
+<img src="./assets/image-20240804144525309.png" alt="image-20240804144525309" style="zoom:25%;" />
 
 引用计数法也会存在一定的问题：当对象之间出现了循环引用的话，引用计数法就会失效。
 
@@ -723,7 +765,7 @@ JVM 类加载器负责将类的二进制数据加载到内存中，生成一个�
 - 其主要原理是通过 GC Root 出发（沿着引用链进行查找），查找可以被关联到的对象，就是有用的对象
 - 无法从 GC Root 出发找到的对象，就是可以被回收的对象
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144543127.png" alt="image-20240804144543127" style="zoom: 33%;" />
+<img src="./assets/image-20240804144543127.png" alt="image-20240804144543127" style="zoom: 33%;" />
 
 **哪些对象可以作为GC Root呢？共有四种**
 
@@ -763,7 +805,7 @@ JVM有垃圾回收机制的原因是为了解决内存管理的问题。
   - 碎片化较为严重，内存空间不连续导致过多的内存碎片（比如数组需要连续空间）；
   - 当程序运行过程中需要分配较大对象时，因无法找到足够的连续内存而不得不提前触发新一轮的垃圾收集。
 
-![image-20240804144605250](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144605250.png)
+<img src="./assets/image-20240804144605250.png" alt="image-20240804144605250" style="zoom:33%;" />
 
 **什么是标记整理算法？**
 
@@ -779,7 +821,7 @@ JVM有垃圾回收机制的原因是为了解决内存管理的问题。
   - 移动位置导致效率比较低，性能受到影响
   - 老年代经常使用
 
-![image-20240804144612586](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144612586.png)
+<img src="./assets/image-20240804144612586.png" alt="image-20240804144612586" style="zoom:33%;" />
 
 **什么是复制算法？**
 
@@ -799,7 +841,7 @@ JVM有垃圾回收机制的原因是为了解决内存管理的问题。
 
 - 缺点：需要两块内存空间，在同一个时刻只能使用一半内存，内存使用率比较低
 
-![image-20240804144623177](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144623177.png)
+<img src="./assets/image-20240804144623177.png" alt="image-20240804144623177" style="zoom:33%;" />
 
 **对比一下复制算法和标记清除算法：**
 
@@ -814,7 +856,7 @@ JVM有垃圾回收机制的原因是为了解决内存管理的问题。
 
 ### 3.3 说一下JVM中的分代回收
 
-![image-20240804144637411](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144637411.png)
+<img src="./assets/image-20240804144637411.png" alt="image-20240804144637411" style="zoom:33%;" />
 
 **分代收集算法的区域划分：**
 
@@ -827,9 +869,9 @@ JVM有垃圾回收机制的原因是为了解决内存管理的问题。
     - 幸存者区 survivor（分成了 from 和 to）
     - Eden区，from区以及to区，**占用比例为 [8:1:1]**
 
-![image-20240804144651695](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144651695.png)
+<img src="./assets/image-20240804144651695.png" alt="image-20240804144651695" style="zoom:33%;" />
 
-![image-20240804144700011](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144700011.png)
+<img src="./assets/image-20240804144700011.png" alt="image-20240804144700011" style="zoom:33%;" />
 
 **分代收集算法的工作机制：**
 
@@ -895,7 +937,7 @@ STW 是 Java 垃圾收集中的一个重要概念。在垃圾收集过程中，J
 
 ### 3.4 说一下 JVM 中有哪些垃圾回收器
 
-![image-20240804144712227](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144712227.png)
+<img src="./assets/image-20240804144712227.png" alt="image-20240804144712227" style="zoom:33%;" />
 
 **JDK8 默认的JVM垃圾回收器：Parallel New（新生代）+Parallel Old（老年代)**
 
@@ -915,7 +957,7 @@ JVM中，实现了多种垃圾收集器，包括：
 
 垃圾回收时，只有一个线程在工作，Java应用中其他线程都要暂停（STW），等待垃圾回收完成
 
-![image-20240804144721965](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144721965.png)
+<img src="./assets/image-20240804144721965.png" alt="image-20240804144721965" style="zoom:33%;" />
 
 **介绍一下并行垃圾收集器 - Parallel New** 和 **Parallel Old**
 
@@ -926,7 +968,7 @@ JVM中，实现了多种垃圾收集器，包括：
 
 垃圾回收时，多个线程在工作，Java应用中其他线程都要暂停（STW），等待垃圾回收完成
 
-![image-20240804144729559](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144729559.png)
+<img src="./assets/image-20240804144729559.png" alt="image-20240804144729559" style="zoom:33%;" />
 
 **介绍一下CMS（并发）垃圾收集器 - CMS 针对老年代**
 
@@ -940,7 +982,7 @@ CMS 垃圾收集器之所以能够实现对 GC 停顿时间的控制，**其本�
 
 在 CMS 出现之前，无论是 Serious 垃圾收集器，还是 ParNew 垃圾收集器，以及 Parallel Scavenge 垃圾收集器，它们在进行垃圾回收的时候都需要 Stop the World，无法实现垃圾回收线程与用户线程的并发执行。
 
-![image-20240804144752415](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144752415.png)
+<img src="./assets/image-20240804144752415.png" alt="image-20240804144752415" style="zoom:33%;" />
 
 CMS 垃圾收集器通过三色标记算法，实现了垃圾回收线程与用户线程的并发执行，从而极大地降低了系统响应时间，提高了强交互应用程序的体验。它的运行过程分为 4 个步骤，包括：
 
@@ -951,7 +993,7 @@ CMS 垃圾收集器通过三色标记算法，实现了垃圾回收线程与用�
   - CMS 采用增量更新的方式解决漏标，即当黑色对象新增对于白色对象的引用时，将黑色变为灰色等待之后重新扫描。
 - **并发清理：**将标记为垃圾的对象进行清除，该阶段不需要「Stop the World」。 在这个阶段，垃圾回收线程与用户线程可以并发执行，因此并不影响用户的响应时间。
 
-![image-20240804144809064](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144809064.png)
+<img src="./assets/image-20240804144809064.png" alt="image-20240804144809064"  />
 
 CMS 的优点是：并发收集、低停顿。但缺点也很明显：
 
@@ -983,14 +1025,14 @@ CMS 的优点是：并发收集、低停顿。但缺点也很明显：
 
 **浮动垃圾的产生：**
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144820195.png" alt="image-20240804144820195" style="zoom:25%;" />
+<img src="./assets/image-20240804144820195.png" alt="image-20240804144820195" style="zoom:25%;" />
 
 1. 并发标记：用户与GC线程同时运行，假设现在扫描到 C 对象， B 对象变为黑色，用户线程执行C 的属性 E = null , GC 线程扫描 C 对象引用链，认为 E 对象是为可达对象，但是 C 对象根本没有引用到 E 对象， E 对象应该是为垃圾对象。
 2. 并发清除阶段：用户与 GC 线程同时运行，会产生新的对象但是没有及时被 GC 清理。 只能在下一次 GC 清理垃圾的修复。
 
 **漏标问题的解决方案：CMS 和 G1 解决方案不同**
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144830419.png" alt="image-20240804144830419" style="zoom:25%;" />
+<img src="./assets/image-20240804144830419.png" alt="image-20240804144830419" style="zoom:25%;" />
 
 问题发生的原因：
 
@@ -1054,7 +1096,7 @@ G1 垃圾回收器可以并行回收垃圾，这意味着它可以利用多个 C
 
 G1 也是基于「标记-复制」和 「标记-整理」算法，因此在进行垃圾回收的时候，仍然需要「Stop the World」。不过，G1 在停顿时间上添加了预测机制，用户可以指定期望停顿时间。
 
-![image-20240804144855259](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144855259.png)
+![image-20240804144855259](./assets/image-20240804144855259.png)
 
 **第一步：介绍一下 Young Collection （Young GC）新生代垃圾回收（如上图）**
 
@@ -1067,7 +1109,7 @@ G1 也是基于「标记-复制」和 「标记-整理」算法，因此在进�
   - 将 Eden 区以及之前的 Survival 区存活对象，采用复制算法，复制到新的 Survival 区
   - 较老对象**晋升**至老年代中
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144912426.png" alt="image-20240804144912426" style="zoom:25%;" />
+<img src="./assets/image-20240804144912426.png" alt="image-20240804144912426" style="zoom:25%;" />
 
 **第二步：介绍一下 并发标记 + 重新标记 Concurrent Mark 阶段（如上图）**
 
@@ -1086,7 +1128,7 @@ G1 也是基于「标记-复制」和 「标记-整理」算法，因此在进�
 
   - 此时需要暂停用户线程
 
-![image-20240804144927993](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144927993.png)
+![image-20240804144927993](./assets/image-20240804144927993.png)
 
 **第三步：介绍一下 混合回收 Mixed Collection（Mixed GC）（如上图）**
 
@@ -1147,28 +1189,28 @@ JDK9之后默认的垃圾回收器是G1（Garbage First）垃圾回收器。
   - 即使抛出OOM异常都不会回收强引用
   - 平时我们创建对象就是强引用
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804144953165.png" alt="image-20240804144953165" style="zoom:25%;" />
+<img src="./assets/image-20240804144953165.png" alt="image-20240804144953165" style="zoom:25%;" />
 
 - **软引用**：仅有软引用引用该对象时，在垃圾回收之后，如果内存仍然不足会再次发生垃圾回收
 
   - 配合 SoftReference 使用
   - 迫不得已，内存空间不足会回收软引用
 
-  <img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145002604.png" alt="image-20240804145002604" style="zoom:25%;" />
+  <img src="./assets/image-20240804145002604.png" alt="image-20240804145002604" style="zoom:25%;" />
 
 - **弱引用**：仅有弱引用引用该对象时，在垃圾回收时，无论内存是否充足，都会回收弱引用
 
   - 垃圾回收一定会被回收，配合 WeakReference 使用
   - ThreadLocal中内存泄漏涉及到弱引用
 
-​	<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145015552.png" alt="image-20240804145015552" style="zoom: 50%;" />
+​	<img src="./assets/image-20240804145015552.png" alt="image-20240804145015552" style="zoom: 50%;" />
 
 - 虚引用：必须配合引用队列使用，当引用对象回收时，会将虚引用入队，由 Reference Handler 线程调用虚引用相关方法释放内存
   - **引用对象被垃圾回收之后，会将虚引用入队**
   - 谁的虚引用进入队列中，谁就要被释放使用到的**外部资源**（可能是系统占用、直接内存等）
   - 可以想象成一个标记，可以服务于强、软、弱引用
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145037174.png" alt="image-20240804145037174" style="zoom:67%;" />
+<img src="./assets/image-20240804145037174.png" alt="image-20240804145037174" style="zoom:67%;" />
 
 **弱引用了解吗?举例说明在哪里可以用?**
 
@@ -1281,7 +1323,7 @@ public class CacheExample {
 
 **空间分配担保：**
 
-![image-20240804145058956](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145058956.png)
+<img src="./assets/image-20240804145058956.png" alt="image-20240804145058956" style="zoom:25%;" />
 
 上面提到过，存活的对象会放入另外一个 Survivor 空间，如果这些存活的对象比 Survivor 空间还大呢？整个流程如下：
 
@@ -1338,7 +1380,7 @@ Full GC 通常比 Young GC（年轻代垃圾回收）耗时更长，因为它涉
 
 **区别四： 垃圾回收的过程不一样, 注意这两个收集器第四阶段得不同**
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145114712.png" alt="image-20240804145114712" style="zoom:25%;" />
+<img src="./assets/image-20240804145114712.png" alt="image-20240804145114712" style="zoom:25%;" />
 
 **区别五: CMS会产生浮动垃圾**
 
@@ -1405,9 +1447,7 @@ JVM 的垃圾回收器不仅仅会对堆进行垃圾回收，它还会对方法�
 
 - 虚拟机栈的设置：
 
-  每个线程默认会开启1M的内存
-
-  ，用于存放栈帧、调用参数、局部变量等，但是一般256k就够用，通常减少每个线程的堆栈，可以产生更多的线程
+  每个线程默认会开启1M的内存，用于存放栈帧、调用参数、局部变量等，但是一般256k就够用，通常减少每个线程的堆栈，可以产生更多的线程
 
   - 栈的大小设置 **Xss**
 
@@ -1473,7 +1513,7 @@ jinfo 用于在补重启应用的情况下，调整虚拟机的各项参数，�
 
 如下命令 jinfo -flags 88952 会输出进程 88952 的 JVM 参数信息。
 
-![image-20240804145142058](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145142058.png)
+![image-20240804145142058](./assets/image-20240804145142058.png)
 
 **jamp：导出堆快照**
 
@@ -1485,7 +1525,7 @@ jmap 命令格式：
 - jamp -heap pid 显示 Java 堆详细信息，比如：用了哪种回收器、参数配置、分代情况。
 - jmap -dump:format=b,file=heap.hprof pid  保存到对应文件中（生成快照）
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145149253.png" alt="image-20240804145149253" style="zoom:50%;" />
+<img src="./assets/image-20240804145149253.png" alt="image-20240804145149253" style="zoom:50%;" />
 
 **jstack：跟踪 Java 堆栈**
 
@@ -1493,7 +1533,7 @@ jstack 用于打印出 JVM 中某个进程或远程调试服务的线程堆栈�
 
 如下 `jstack -l 10025` 会输出进程 10025 的线程堆栈信息，包括锁信息。
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145213682.png" alt="image-20240804145213682" style="zoom:50%;" />
+<img src="./assets/image-20240804145213682.png" alt="image-20240804145213682" style="zoom:50%;" />
 
 **操作系统性能监控命令**
 
@@ -1566,7 +1606,7 @@ while(true){
 2. VisualVM 分析dump 文件：文件 - 装入 - 选择 dump 文件 - 打开
 3. 通过查看堆信息，**定位内存溢出问题** - 查看当前哪一行出现了错误，进行检查
 
-<img src="/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145239877.png" alt="image-20240804145239877" style="zoom:50%;" />
+<img src="./assets/image-20240804145239877.png" alt="image-20240804145239877" style="zoom:50%;" />
 
 
 
@@ -1581,7 +1621,7 @@ while(true){
 
 ------
 
-![image-20240804145252588](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145252588.png)
+<img src="./assets/image-20240804145252588.png" alt="image-20240804145252588" style="zoom:33%;" />
 
 - **使用 top 命令可以查看占用cpu的情况**
 
@@ -1591,13 +1631,13 @@ while(true){
 
   - 对应指令为：ps H -eo pid,tid,%cpu | grep 2266
 
-  ![image-20240804145302532](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145302532.png)
+  <img src="./assets/image-20240804145302532.png" alt="image-20240804145302532" style="zoom:50%;" />
 
 - 使用命令 jstack 2266 查看进程内的**线程信息** - 可以看到 2276 占用线程比较高
 
   - printf “%x\n” 2276  → 8e4  则是十六进制信息
 
-![image-20240804145323884](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145323884.png)
+<img src="./assets/image-20240804145323884.png" alt="image-20240804145323884" style="zoom:50%;" />
 
 可以看到是当前第9行出现了问题
 
@@ -1668,6 +1708,6 @@ while(true){
 
 ### 4.9 死锁如何检测
 
-对于死锁，这种情况基本上很容易发现，因为jstack可以帮助我们检查死锁，并且在日志中打印具体的死锁线程信息。如下是一个产生死锁的一个jstack日志示例：
+对于死锁，这种情况基本上很容易发现，因为jstack可以帮助我们检查死锁，并且在日志中打印具体的死锁线程信息。如下是一个产生死锁的一个jstack 日志示例：
 
-![image-20240804145339174](/Users/tianjiangyu/MyStudy/Java-learning/Super-Java-Book/Java 知识总结/assets/image-20240804145339174.png)
+<img src="./assets/image-20240804145339174.png" alt="image-20240804145339174" style="zoom:50%;" />

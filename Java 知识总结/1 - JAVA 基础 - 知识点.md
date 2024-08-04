@@ -214,9 +214,9 @@ JDK 动态代理中，有两个核心： InvocationHandler 接口和 Proxy 类�
   - 动态代理会将方法转发到其中的 invokde 方法中
 - 也就是说：你通过Proxy 类的 newProxyInstance() 创建的代理对象在调用方法的时候，实际会调用到实现InvocationHandler 接口的类的 invoke()方法。 你可以在 invoke() 方法中自定义处理逻辑，比如在方法执行前后做什么事情。
 - JDK 动态代理的使用步骤：
-  - 定义一个接口及其实现类**（目标类）**
-  - 自定义 InvocationHandler 并重写invoke方法，在 invoke 方法中我们会调用原生方法（被代理类的方法）并自定义一些处理逻辑**（定义代理类）**
-  - 通过 Proxy.newProxyInstance(ClassLoader loader,Class<?>[] interfaces,InvocationHandler h) 方法创建代理对象**（代理类实例对象）**
+  - 定义一个接口及其实现类 **（目标类）**
+  - 自定义 InvocationHandler 并重写invoke方法，在 invoke 方法中我们会调用原生方法（被代理类的方法）并自定义一些处理逻辑 **（定义代理类）**
+  - 通过 Proxy.newProxyInstance(ClassLoader loader,Class<?>[] interfaces,InvocationHandler h) 方法创建代理对象 **（代理类实例对象）**
 
 JDK 动态代理代码示例如下:
 
@@ -452,7 +452,7 @@ public static void funD(List<B> listB) {
 }
 ```
 
-**上述方法会报错：List<B> 无法转换成 List<A>, List<B> 在运行时会被擦出为 List<Object>**
+上述方法会报错：List A 无法转换成 List A , List B 在运行时会被擦出为 List Object
 
 - 为了解决泛型中隐含的转换问题，Java泛型加入了类型参数的上下边界机制。
 - <? extends A> 表示该类型参数可以是A(上边界)或者A的子类类型。编译时擦除到类型A，即用A类型代替类型参数。
