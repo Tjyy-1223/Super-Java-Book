@@ -1,7 +1,68 @@
 [TOC]
 
 ```
-
+Spring-SpringBoot-Mybatis 知识点
+    1 Spring
+        1.1 说一下你对 Spring 的理解
+        1.2 Spring IoC和AOP 介绍一下
+        1.3 什么是 AOP，项目中是否使用过 AOP
+        1.4 怎么理解Spring Ioc？IOC 通过什么机制实现的?
+        1.5 如果让你设计一个Spring Ioc，你觉得会从哪些方面考虑这个设计？
+        1.6 Spring 中哪些地方用到了反射
+        1.7 Spring框架中的单例Bean是线程安全的吗
+        1.8 Spring事务传播机制？Spring中事务失效的场景有哪些？(超级重点!!!)
+        1.9 Spring-bean 的生命周期（超级重点!!!）
+        1.10 Spring-Bean 中的循环引用(超级重点!!!)
+        1.11 Spring MVC 的执行流程知道吗
+        1.12 Spring 框架常见注解有哪些
+        1.13 Spring bean 有哪些作用域
+        1.14 在Spring中，在bean加载/销毁前后，如果想实现某些逻辑，可以怎么做
+        1.15 Spring给我们提供了很多扩展点，这些有了解吗？
+    2 Springboot
+        2.1 为什么使用springboot
+        2.2 怎么理解SpringBoot中的约定大于配置
+        2.3 SpringBoot 自动装配原理(重要!!!!)
+    3 Mybatis
+        3.1 - 1:  JDBC 执行流程
+        3.1 - 2 : Mybatis 的优势
+        3.2 Mybatis 延迟加载使用及原理
+        3.3 Mybatis 的一级缓存和二级缓存
+        3.4 Mybatis里的 # 和 $ 的区别？
+        3.5 Mybatis-Plus 和 Mybatis 的区别
+    4 SpringCloud
+        4.1 了解SpringCloud吗，说一下他和SpringBoot的区别
+        4.2 用过哪些微服务组件
+        4.3 负载均衡有哪些算法？
+        4.4 什么是服务熔断
+        4.5 什么是服务降级
+    5 Spring 常见面试题
+        5.1 什么是 Spring 框架?
+        5.2 列举一些重要的 Spring 模块?
+        5.3 谈谈自己对于 Spring IoC 和 AOP 的理解
+        5.4 Component 和 Bean 的区别是什么
+        5.5 Spring Bean 的生命周期说一下（重点 + 默写）
+        5.6 Autowired 和 Resource 的区别是什么
+        5.7 Spring 中的 bean 的作用域有哪些?
+        5.8 Spring MVC 的工作机制
+        5.9 Spring 中的异常统一处理怎么做
+        5.10 拦截器和过滤器了解么?
+        5.11 Spring 动态代理默认用哪一种
+    6 Mybatis 面试题
+        6.1 #{} 和 ${} 的区别是什么？
+        6.2 DAO接口的工作原理是什么？
+        6.3 DAO 接口里的方法，参数不同时，方法可以被重载吗？
+        6.4 Mybatis 如何分页？分页插件原理是什么？
+        6.5Mybatis 如何将 sql 执行结果封装为目标对象并返回？映射形式？
+        6.6 Mybatis 延迟加载？实现原理？
+        6.7 Mybatis 的 xml 映射文件中，不同映射文件 id 是否可以重复？
+        6.8 讲一讲 Mybatis 中的 Executor 执行器
+        6.9 简述 Mybatis 的 xml 映射文件和其内部数据结构之间的关系
+    7 SpringBoot 面试题
+        7.1 Spring Boot 和 Spring 的区别
+        7.2 说出使用 Spring Boot 的主要优点
+        7.3 什么是 Spring Boot Starter?
+        7.4 Spring Boot 支持哪些嵌入式 web 容器?
+        7.5 SpringBoot 常用的读取配置？配置优先级
 ```
 
 # Spring-SpringBoot-Mybatis 知识点
@@ -187,8 +248,8 @@ public class b implements bimpl{
 }
 
 // c 就是 b 的代理类
-**// jdk 代理必须基于接口**
-public class c **implements bimpl**{
+// jdk 代理必须基于接口
+public class c implements bimpl{
 
 		// target 就是原来的 b 实例对象
 		private bimpl target;
@@ -234,7 +295,7 @@ public class b{
 }
 
 // cglib 底层: 字节码的方式生成 b 的子类
-public class c **extends b**{
+public class c extends b{
 
 		// target 就是原来的 b 实例对象
 		private b target;
