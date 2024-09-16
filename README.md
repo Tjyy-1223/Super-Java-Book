@@ -10,12 +10,12 @@
 + [Java 集合知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/2%20-%20JAVA%20%E9%9B%86%E5%90%88%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java JUC - 并发知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/3%20-%20JUC%20%E5%A4%9A%E7%BA%BF%E7%A8%8B%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java JVM - 虚拟机知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/4%20-%20JVM%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
++ [Java MySQL 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/5%20-%20MySQL%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
++ [Java Redis 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/6%20-%20Redis%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java Spring - Springboot - Mybatis 知识点]
-+ [Java MySQL 知识点]
-+ [Java Redis 知识点]
 + [计算机网络知识点]
 + [操作系统面试题]
-+ [数据结构与算法面试]
++ [Leetcode - HOT 100 三天速通]
 
 ## 2 Java 进阶与场景
 
