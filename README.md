@@ -13,12 +13,14 @@
 + [Java MySQL 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/5%20-%20MySQL%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java Redis 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/6%20-%20Redis%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java Spring - Springboot - Mybatis 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/7%20-%20SSM%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
-+ [计算机网络知识点]
-+ [操作系统面试题]
++ [计算机网络知识点 - 基础版]
++ [操作系统知识点 - 基础版]
 + [Leetcode - HOT 100 三天速通]
 
 ## 2 Java 进阶与场景
 
++ 计算机网络 - 进阶版
++ 操作系统 - 进阶版
 + 设计模式 - 总结篇
 + 缓存原理 - 总结篇
 + 高并发 - 总结篇
