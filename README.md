@@ -13,8 +13,8 @@
 + [Java MySQL 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/5%20-%20MySQL%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java Redis 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/6%20-%20Redis%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Java Spring - Springboot - Mybatis 知识点](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/7%20-%20SSM%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
-+ [计算机网络知识点 - 基础版]
-+ [操作系统知识点 - 基础版]
++ [计算机网络知识点 - 基础版](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/8%20-%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
++ [操作系统知识点 - 基础版](https://github.com/Tjyy-1223/Super-Java-Book/blob/master/Java%20%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93/9%20-%20%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%20-%20%E7%9F%A5%E8%AF%86%E7%82%B9.md)
 + [Leetcode - HOT 100 三天速通]
 
 ## 2 Java 进阶与场景
